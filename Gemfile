@@ -16,6 +16,7 @@ gem 'omniauth-facebook'
 gem 'pg'
 gem 'sendgrid'
 gem 'simple_form'
+gem 'rack-canonical-host'
 group :production do
   gem 'puma'
   gem 'rails_12factor'

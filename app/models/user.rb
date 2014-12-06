@@ -1,3 +1,4 @@
+# XXX not in use ATM
 class User < ActiveRecord::Base
 
   def self.create_with_omniauth(auth)

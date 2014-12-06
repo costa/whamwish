@@ -1,3 +1,5 @@
+__END__
+XXX until users/auth is in use
 # Feature: Sign out
 #   As a user
 #   I want to sign out

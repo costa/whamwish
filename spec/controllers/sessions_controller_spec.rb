@@ -1,4 +1,7 @@
+# XXX all xit-disabled until in use
 describe SessionsController, :omniauth do
+
+  render_views
 
   before do
     request.env['omniauth.auth'] = auth_mock
@@ -6,18 +9,18 @@ describe SessionsController, :omniauth do
 
   describe "#create" do
 
-    it "creates a user" do
-      expect {post :create, provider: :twitter}.to change{ User.count }.by(1)
+    xit "creates a user" do
+      expect {post :create, provider: :facebook}.to change{ User.count }.by(1)
     end
 
-    it "creates a session" do
+    xit "creates a session" do
       expect(session[:user_id]).to be_nil
-      post :create, provider: :twitter
+      post :create, provider: :facebook
       expect(session[:user_id]).not_to be_nil
     end
 
-    it "redirects to the home page" do
-      post :create, provider: :twitter
+    xit "redirects to the home page" do
+      post :create, provider: :facebook
       expect(response).to redirect_to root_url
     end
 
@@ -26,16 +29,16 @@ describe SessionsController, :omniauth do
   describe "#destroy" do
 
     before do
-      post :create, provider: :twitter
+      post :create, provider: :facebook
     end
 
-    it "resets the session" do
+    xit "resets the session" do
       expect(session[:user_id]).not_to be_nil
       delete :destroy
       expect(session[:user_id]).to be_nil
     end
 
-    it "redirects to the home page" do
+    xit "redirects to the home page" do
       delete :destroy
       expect(response).to redirect_to root_url
     end

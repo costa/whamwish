@@ -1,3 +1,4 @@
+# XXX not in use ATM
 class SessionsController < ApplicationController
 
   def new

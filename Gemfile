@@ -20,6 +20,7 @@ gem 'rack-canonical-host'
 group :production do
   gem 'puma'
   gem 'rails_12factor'
+  gem 'exception_notification'
 end
 group :development do
   gem 'better_errors'

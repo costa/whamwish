@@ -23,6 +23,7 @@ group :production do
 end
 group :development do
   gem 'better_errors'
+  gem 'letter_opener'
   gem 'binding_of_caller', :platforms=>[:mri_21]
   gem 'foreman'
   gem 'guard-bundler'

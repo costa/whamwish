@@ -86,7 +86,7 @@ GEM
     guard-bundler (2.0.0)
       bundler (~> 1.0)
       guard (~> 2.2)
-    guard-rails (0.7.0)
+    guard-pow (2.0.0)
       guard (~> 2.0)
     guard-rspec (4.4.1)
       guard (~> 2.1)
@@ -287,7 +287,7 @@ DEPENDENCIES
   foreman
   foundation-rails
   guard-bundler
-  guard-rails
+  guard-pow
   guard-rspec
   haml-rails
   high_voltage

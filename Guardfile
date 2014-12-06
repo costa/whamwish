@@ -13,11 +13,6 @@ guard :bundler do
   # watch(/^.+\.gemspec/)
 end
 
-guard 'rails' do
-  watch('Gemfile.lock')
-  watch(%r{^(config|lib)/.*})
-end
-
 
 # Note: The cmd option is now required due to the increasing number of ways
 #       rspec may be run, below are examples of the most common uses.
@@ -76,4 +71,17 @@ guard :rspec, cmd: "bundle exec rspec" do
     Dir[File.join("**/#{m[1]}.feature")][0] || "spec/acceptance"
   end
 
+end
+
+guard 'pow' do
+  watch('.powrc')
+  watch('.powenv')
+  watch('.rvmrc')
+  watch('.ruby-version')
+  watch('Gemfile')
+  watch('Gemfile.lock')
+  watch('config/application.rb')
+  watch('config/environment.rb')
+  watch(%r{^config/environments/.*\.rb$})
+  watch(%r{^config/initializers/.*\.rb$})
 end

@@ -11,10 +11,12 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
-//= require turbolinks
+//= require jquery-ujs
 //= require foundation
+//= require backbone
+//= require backbone.stickit/backbone.stickit
 //= require_tree .
+
 $(function() {
   $(document).foundation();
 });

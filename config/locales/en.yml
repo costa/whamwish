@@ -24,3 +24,4 @@ en:
     application:
       title: 'Wham! Wish App'
       description: 'A Wham!Wishing Well'
+      version: "made in heaven %{version}"

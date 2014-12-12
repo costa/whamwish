@@ -5,7 +5,12 @@
     %title= content_for?(:title) ? yield(:title) : t('.title')
     %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : t('.description')}"}
     = stylesheet_link_tag 'application', media: 'all'
-    = javascript_include_tag 'vendor/modernizr'  # Modernizr is required for Zurb Foundation
     = javascript_include_tag 'application'
     = csrf_meta_tags
-  %body= yield
+  %body
+    %header
+      -# XXX for system messages etc
+    %main.container{:role => 'main'}
+      = yield
+    %footer
+      %span.copyright= t('.version', version: APP_VERSION)

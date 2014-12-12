@@ -1,4 +1,4 @@
 $ ->
   new Registers.LayoutView(
-    el: $('body')[0]
+    el: $('main')
     ).render()

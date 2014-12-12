@@ -12,13 +12,9 @@
 //
 //= require jquery
 //= require jquery-ujs
-//= require foundation
+//= require bootstrap-sprockets
 //= require underscore
 //= require backbone
 //= require backbone.stickit/backbone.stickit
 //= require hamlcoffee
 //= require_tree .
-
-$(function() {
-  $(document).foundation();
-});

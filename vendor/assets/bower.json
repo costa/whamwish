@@ -1,9 +1,10 @@
 {
   "name": "dsl-generated dependencies",
   "dependencies": {
-    "jquery": "latest",
+    "jquery": "~>2.1",
     "jquery-ujs": "latest",
     "backbone": "latest",
-    "backbone.stickit": "latest"
+    "backbone.stickit": "latest",
+    "bootstrap-colorpicker": "latest"
   }
 }

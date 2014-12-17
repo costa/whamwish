@@ -12,9 +12,11 @@
 //
 //= require jquery
 //= require jquery-ujs
+//= require jquery-select_text
 //= require bootstrap-sprockets
 //= require underscore
 //= require backbone
 //= require backbone.stickit/backbone.stickit
 //= require hamlcoffee
+//= require bootstrap-colorpicker
 //= require_tree .

@@ -23,7 +23,7 @@ end
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
 
-guard :rspec, cmd: "bundle exec rspec" do
+guard :rspec, cmd: 'bin/rspec' do
   require "ostruct"
 
   # Generic Ruby apps
@@ -74,9 +74,11 @@ guard :rspec, cmd: "bundle exec rspec" do
 end
 
 guard 'pow' do
+  watch('.env')
   watch('.powrc')
   watch('.powenv')
   watch('.rvmrc')
+  watch('.rvmenv')
   watch('.ruby-version')
   watch('Gemfile')
   watch('Gemfile.lock')

@@ -24,6 +24,7 @@ group :production do
   gem 'exception_notification'
 end
 group :development do
+  gem 'dotenv-rails'
   gem 'better_errors'
   gem 'letter_opener'
   gem 'binding_of_caller', :platforms=>[:mri_21]
@@ -56,4 +57,5 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
 end

@@ -10,3 +10,18 @@ footer {
     color: #CCC;
   }
 }
+
+.navbar {
+  .tmp-logo {
+    display: inline-block;
+    height: 100%;
+    overflow: visible;
+    i {
+      display: block;
+      height: 108%;
+      &:first-child {
+        margin-top: -66%;
+      }
+    }
+  }
+}

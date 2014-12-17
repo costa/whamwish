@@ -1,3 +1,30 @@
-// Place all the styles related to the registers controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.register {
+  position: relative;
+
+  .wish {
+    &.completion-suggested {
+      font-style: italic;
+      opacity: 0.5;
+    }
+    &.completion-new {
+      font-weight: bold;
+    }
+    &.completion-complete {
+      text-decoration: line-through;
+    }
+    &.editing {
+      font-style: italic;
+    }
+  }
+
+  .aux-header-control {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    .btn {
+      background: none;
+      width: 120px;
+      border: solid 1px #999;
+    }
+  }
+}

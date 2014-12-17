@@ -1,0 +1,24 @@
+%nav.navbar.navbar-collapse.navbar-static-top.navbar-inverse{role: 'navigation'}
+  .container-fluid
+    .navbar-header
+      %a.navbar-brand{href: '#'}
+        .tmp-logo
+          %i.glyphicon.glyphicon-cloud-upload
+          %i.glyphicon.glyphicon-list-alt
+        .tmp-logo
+          %i.glyphicon.glyphicon-cloud-download
+          %i.glyphicon.glyphicon-gift
+        %em
+          WHAM!WISH!
+.register.well.well-lg
+  .aux-header-control.hidden-xs
+    %button.bg-colorpicker.btn.btn-sm &nbsp;
+    %button.status.btn.btn-sm.hidden
+  .page-header
+    %h1
+      %span.title{contenteditable: true} My Wishlist
+      %small.subtitle{contenteditable: true} since 05-Dec-2014
+  #wish-1234567890bar.well.well-sm.wish.completion-progress{contenteditable: true} Whisky bar
+  #wish-1234567890pony.well.well-sm.wish.completion-complete Pony
+  #wish-1234567890girl.well.well-sm.wish.completion-new{contenteditable: true} Little girl
+  #wish-1234567890new.well.well-sm.wish.completion-suggested{contenteditable: true} What would you want?

@@ -20,3 +20,4 @@
 //= require hamlcoffee
 //= require bootstrap-colorpicker
 //= require_tree .
+//= require uservoice

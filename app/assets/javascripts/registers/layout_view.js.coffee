@@ -7,7 +7,9 @@ class Registers.LayoutView extends Backbone.View
     'input  .completion-suggested': '_styleNewNew'  # XXX TMP (must style a model)
 
   render: ->
-    @$el.html JST['registers/layout']()
+    @$el.html JST['registers/layout']
+      title: @model.get('title')
+      subtitle: @model.get('subtitle')
 
     my_color = '66CC33'  # XXX
 

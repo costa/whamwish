@@ -11,6 +11,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'bower-rails'
 gem 'haml_coffee_assets', :github => 'netzpirat/haml_coffee_assets'  # XXX https://github.com/netzpirat/haml_coffee_assets/issues/130
+gem 'i18n-js', '~>3.0.0.rc8'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'haml-rails'

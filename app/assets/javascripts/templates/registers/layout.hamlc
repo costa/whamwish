@@ -8,16 +8,17 @@
         .tmp-logo
           %i.glyphicon.glyphicon-cloud-download
           %i.glyphicon.glyphicon-gift
-        %em
-          WHAM!WISH!
+        %em= I18n.t('.brandname')
+    %p.navbar-text.navbar-right
+      %sub.tmp-tagline= I18n.t('.tagline')
 .register.well.well-lg
   .aux-header-control.hidden-xs
     %button.bg-colorpicker.btn.btn-sm &nbsp;
     %button.status.btn.btn-sm.hidden
   .page-header
     %h1
-      %span.title{contenteditable: true} My Wishlist
-      %small.subtitle{contenteditable: true} since 05-Dec-2014
+      %span.title{contenteditable: true}= @title
+      %small.subtitle{contenteditable: true}= @subtitle
   #wish-1234567890bar.well.well-sm.wish.completion-progress{contenteditable: true} Whisky bar
   #wish-1234567890pony.well.well-sm.wish.completion-complete Pony
   #wish-1234567890girl.well.well-sm.wish.completion-new{contenteditable: true} Little girl

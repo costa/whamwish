@@ -19,5 +19,7 @@
 //= require backbone.stickit/backbone.stickit
 //= require hamlcoffee
 //= require bootstrap-colorpicker
+//= require i18n/translations
+//= require i18n-ext
 //= require_tree .
 //= require uservoice

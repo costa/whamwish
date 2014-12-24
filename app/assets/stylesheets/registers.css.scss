@@ -1,6 +1,10 @@
 .register {
   position: relative;
 
+  .editing {
+    font-style: italic;
+  }
+
   .wish {
     &.completion-suggested {
       font-style: italic;
@@ -11,9 +15,6 @@
     }
     &.completion-complete {
       text-decoration: line-through;
-    }
-    &.editing {
-      font-style: italic;
     }
   }
 

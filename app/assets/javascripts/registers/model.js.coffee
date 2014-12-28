@@ -7,6 +7,7 @@ class Register extends Backbone.Model
     key: @_generateKey()
     title: "Yo Wishlist"
     subtitle: "since #{I18n.l 'date.formats.default', new Date}"
+    bg_color: '66cc33'
 
   _generateKey: ->
     "#{rhex4()}-#{rhex4()}-#{rhex4()}-#{rhex4()}"

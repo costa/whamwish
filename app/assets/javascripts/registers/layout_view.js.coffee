@@ -2,35 +2,42 @@ class Registers.LayoutView extends Backbone.View
   events:
     'changeColor  .bg-colorpicker': '_changeBackgroundColor'
     'click  .status.btn': '_undoOrNothing'
-    'input  .wish, .title, .subtitle' : '_undoableSave'
     'focus  .completion-suggested': '_selectAll'
     'input  .completion-suggested': '_styleNewNew'  # XXX TMP (must style a model)
+  bindings:
+    '.title': 'title'
+    '.subtitle': 'subtitle'
+    '.bg-colorpicker':  # NOTE one way only, unfortunately
+      attributes: [
+        name: 'data-color'
+        observe: 'bg_color'
+        onGet: (val)-> "##{val}"
+      ]
 
   render: ->
-    @$el.html JST['registers/layout']
-      title: @model.get('title')
-      subtitle: @model.get('subtitle')
+    @$el.html JST['registers/layout']()
 
-    my_color = '66CC33'  # XXX
+    @listenTo @model, 'change', (model, options)->
+      if options.stickitChange
+        @$(options.stickitChange.selector).addClass 'editing'
+        @_undoableSave()
+    @stickit()
 
-    @$('.aux-header-control .bg-colorpicker').
-      data(color: "rgb(#{@_hexTOrgb my_color})").
-      colorpicker()
-    @_setBackground my_color
+    @listenTo @model, 'change:bg_color', (model, value)-> @_setBackground value
+    @_setBackground @model.get 'bg_color'
+    @$('.aux-header-control .bg-colorpicker').colorpicker()
 
     @
 
-
   _changeBackgroundColor: (e)->
-    @_setBackground e.color.toHex().slice(1)
-    @_undoableSave e
+    @model.set 'bg_color', e.color.toHex().slice(1)
+    @_undoableSave()
 
   _styleNewNew: (e)->
     @$('.completion-new').removeClass('completion-new').addClass('completion-progress')
     $(e.target).removeClass('completion-suggested').addClass('completion-new')
 
-  _undoableSave: (e)->
-    $(e.target).addClass 'editing'  # NOTE
+  _undoableSave: ->
     @_undo_seconds_left = 5
     unless @__undoTimer
       @_showStatusBtn()

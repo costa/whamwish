@@ -1,7 +1,7 @@
 %nav.navbar.navbar-collapse.navbar-static-top.navbar-inverse{role: 'navigation'}
   .container-fluid
     .navbar-header
-      %a.navbar-brand{href: '#'}
+      .navbar-brand
         .tmp-logo
           %i.glyphicon.glyphicon-cloud-upload
           %i.glyphicon.glyphicon-list-alt
@@ -13,12 +13,13 @@
       %sub.tmp-tagline= I18n.t('.tagline')
 .register.well.well-lg
   .aux-header-control.hidden-xs
-    %button.bg-colorpicker.btn.btn-sm &nbsp;
+    %button.bg-colorpicker.btn.btn-sm{data-color-format: 'hex'} &nbsp;
     %button.status.btn.btn-sm.hidden
   .page-header
     %h1
-      %span.title{contenteditable: true}= @title
-      %small.subtitle{contenteditable: true}= @subtitle
+      %span.title{contenteditable: true}
+      %small.subtitle{contenteditable: true}
+
   #wish-1234567890bar.well.well-sm.wish.completion-progress{contenteditable: true} Whisky bar
   #wish-1234567890pony.well.well-sm.wish.completion-complete Pony
   #wish-1234567890girl.well.well-sm.wish.completion-new{contenteditable: true} Little girl

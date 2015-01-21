@@ -31,6 +31,7 @@ class Registers.LayoutView extends Backbone.View
     @_setBackground @model.get 'bg_color'
     @$('.aux-header-control .bg-colorpicker').colorpicker()
 
+    @_statusText "Unsaved"  if @model.isNew()
     @
 
   _changeBackgroundColor: (e)->

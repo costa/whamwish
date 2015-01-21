@@ -1,9 +1,12 @@
 feature 'App Land' do
 
   scenario "unsuspecting visitor comes along" do
+
+    # Play with some fields
+
     visit root_path
-    expect(page).to have_content "WISHREGGA"
     test_content_editability '.register .title', "Yo Wishlist"
+    expect(page).to have_content "Unsaved"
     test_content_editability '#wish-1234567890bar', "Whisky bar"
     test_content_editability '.register .subtitle', /since/
     test_content_ineditability '#wish-1234567890pony', "Pony"
@@ -31,7 +34,7 @@ feature 'App Land' do
     expect(anchor1).to match /^reg\/\h\h\h\h-\h\h\h\h-\h\h\h\h-\h\h\h\h$/
 
     visit root_path
-    expect(page).to have_content "WISHREGGA"
+    expect(page).to have_content "Unsaved"
     test_content_editability '.register .title', "Yo Wishlist"
     anchor2 = current_url.split('#').last
     expect(anchor2).to match /^reg\/\h\h\h\h-\h\h\h\h-\h\h\h\h-\h\h\h\h$/

@@ -12,9 +12,9 @@ feature 'App Land' do
     find('.bg-colorpicker').click
     expect(page).to have_no_content "Undo?"
     find('.colorpicker-saturation').click
-    expect(page).to have_content "Undo? (5)"
+    expect(page).to have_content "Undo? (3)"
     expect(page).to have_no_content "Loaded"
-    click_on "Undo? (4)"
+    click_on "Undo? (2)"
     expect(page).to have_no_content "Undo?"
     expect(page).to have_no_selector '.colorpicker-saturation'
     expect(page).to have_content "Loaded"

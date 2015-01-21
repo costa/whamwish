@@ -8,14 +8,14 @@
     "type": "git",
     "url": "git://github.com/theblacksmith/bootstrap-colorpicker.git"
   },
-  "homepage": "https://github.com/theblacksmith/bootstrap-colorpicker",
-  "_release": "cb9cc697a6",
+  "homepage": "https://github.com/costa/bootstrap-colorpicker",
+  "_release": "ecbc9bad0f",
   "_resolution": {
     "type": "branch",
-    "branch": "master",
-    "commit": "cb9cc697a6ec9a87d85f230586871df94b9186f1"
+    "branch": "scss-asset-pipeline",
+    "commit": "ecbc9bad0ff32fd1f46777e09381be8c1c883d34"
   },
-  "_source": "git://github.com/theblacksmith/bootstrap-colorpicker.git",
-  "_target": "*",
-  "_originalSource": "bootstrap-colorpicker"
+  "_source": "git://github.com/costa/bootstrap-colorpicker.git",
+  "_target": "scss-asset-pipeline",
+  "_originalSource": "git://github.com/costa/bootstrap-colorpicker"
 }

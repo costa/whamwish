@@ -4,7 +4,9 @@
     "jquery": "~>2.1",
     "jquery-ujs": "latest",
     "backbone": "latest",
-    "backbone.stickit": "latest",
-    "bootstrap-colorpicker": "latest"
+    "backbonefire": "git://github.com/costa/backbonefire#idAttribute-support-tmp",
+    "backbone.stickit": "git://github.com/nytimes/backbone.stickit#master",
+    "bootstrap-colorpicker": "git://github.com/costa/bootstrap-colorpicker#scss-asset-pipeline",
+    "mockfirebase": "latest"
   }
 }

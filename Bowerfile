@@ -1,5 +1,9 @@
 asset 'jquery', '~>2.1'
 asset 'jquery-ujs'
 asset 'backbone'
-asset 'backbone.stickit'
-asset 'bootstrap-colorpicker'
+asset 'backbonefire', 'idAttribute-support-tmp', github: 'costa/backbonefire'
+asset 'backbone.stickit', 'master', github: 'nytimes/backbone.stickit'
+asset 'bootstrap-colorpicker', 'scss-asset-pipeline', github: 'costa/bootstrap-colorpicker'
+
+
+asset 'mockfirebase'

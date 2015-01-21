@@ -1,0 +1,50 @@
+{
+  "name": "backbonefire",
+  "description": "The officially supported Backbone binding for Firebase",
+  "authors": [
+    "Firebase <support@firebase.com> (https://www.firebase.com/)"
+  ],
+  "homepage": "https://github.com/firebase/backbonefire/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/firebase/backbonefire.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "backbone",
+    "firebase",
+    "realtime"
+  ],
+  "main": [
+    "dist/backbonefire.js"
+  ],
+  "ignore": [
+    "**/.*",
+    "src",
+    "test",
+    "examples",
+    "node_modules",
+    "bower_components",
+    "package.json",
+    "Gruntfile.js",
+    "changelog.txt",
+    "index.html"
+  ],
+  "dependencies": {
+    "firebase": "2.0.x",
+    "backbone": "<=1.1.0",
+    "underscore": "~1.5.2"
+  },
+  "devDependencies": {
+    "mockfirebase": "~0.3.0"
+  },
+  "_release": "2c8c93626f",
+  "_resolution": {
+    "type": "branch",
+    "branch": "idAttribute-support-tmp",
+    "commit": "2c8c93626f223bdc8ea3d1dd245b84a897388055"
+  },
+  "_source": "git://github.com/costa/backbonefire.git",
+  "_target": "idAttribute-support-tmp",
+  "_originalSource": "git://github.com/costa/backbonefire"
+}

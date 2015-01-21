@@ -1,9 +1,13 @@
 class Registers.LayoutView extends Backbone.View
+
+  UNDO_CHANCE_SECONDS = 3
+
   events:
     'changeColor  .bg-colorpicker': '_changeBackgroundColor'
     'click  .status.btn': '_undoOrNothing'
     'focus  .completion-suggested': '_selectAll'
     'input  .completion-suggested': '_styleNewNew'  # XXX TMP (must style a model)
+
   bindings:
     '.title': 'title'
     '.subtitle': 'subtitle'
@@ -38,7 +42,7 @@ class Registers.LayoutView extends Backbone.View
     $(e.target).removeClass('completion-suggested').addClass('completion-new')
 
   _undoableSave: ->
-    @_undo_seconds_left = 5
+    @_undo_seconds_left = UNDO_CHANCE_SECONDS
     unless @__undoTimer
       @_showStatusBtn()
       @_undoTick()
@@ -78,7 +82,7 @@ class Registers.LayoutView extends Backbone.View
     @_statusText text
     _(=>
       @_hideStatusBtn()  if @$('.status.btn').text() == text
-    ).delay 5000
+    ).delay 6000
 
   _statusText: (text)->
     @_showStatusBtn()

@@ -1,3 +1,3 @@
-if Rails.env.development?
-  BetterErrors::Middleware.allow_ip! ENV['MY_PRIVATE_IP']  if ENV['MY_PRIVATE_IP'].present?
+if defined?(BetterErrors) && Rails.application.secrets.better_errors_private_ip.present?
+  BetterErrors::Middleware.allow_ip! Rails.application.secrets.better_errors_private_ip
 end

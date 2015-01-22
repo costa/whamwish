@@ -66,7 +66,8 @@ class Registers.LayoutView extends Backbone.View
       @_doSave()
 
   _doSave: ->
-    # XXX DO SAVE AND THEN
+    @model.save null, wait: true
+
     @$('.editing').removeClass 'editing'  # NOTE
     @$('.bg-colorpicker').colorpicker('hide')
 

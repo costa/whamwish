@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: 'registers#app'
+  resources :registers
   # XXX temporarily not in use
   # get '/auth/:provider/callback' => 'sessions#create'
   # get '/signin' => 'sessions#new', :as => :signin

@@ -2,8 +2,9 @@ source 'https://rubygems.org'
 
 ruby '2.1.5'
 
-gem 'pg'
 gem 'rails', '4.1.8'
+gem 'pg'
+gem 'firebase'
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass', '~> 3.3.1'
 gem 'sass-rails', '~> 4.0.3'

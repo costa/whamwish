@@ -7,40 +7,63 @@ class Registers.LayoutView extends Backbone.View
     'click  .status.btn': '_undoOrNothing'
     'focus  .completion-suggested': '_selectAll'
     'input  .completion-suggested': '_styleNewNew'  # XXX TMP (must style a model)
+    'input  .wish': '_dummyEditing' # XXX TMP
 
   bindings:
     '.title': 'title'
     '.subtitle': 'subtitle'
-    '.bg-colorpicker':  # NOTE one way only, unfortunately
+    '.bg-colorpicker':  # NOTE one way only, unfortunately, #_changeBackgroundColor is the other way
       attributes: [
         name: 'data-color'
         observe: 'bg_color'
         onGet: (val)-> "##{val}"
       ]
 
-  render: ->
-    @$el.html JST['registers/layout']()
+  _changeBackgroundColor: (e)->
+    @model.set 'bg_color', e.color.toHex().slice(1)
+    @_undoableSave()
 
+  _autoSaveSetup: ->
     @listenTo @model, 'change', (model, options)->
       if options.stickitChange
         @$(options.stickitChange.selector).addClass 'editing'
         @_undoableSave()
     @stickit()
 
-    @listenTo @model, 'change:bg_color', (model, value)-> @_setBackground value
+    @listenTo @model, 'change:bg_color', (model, value)->
+      @_setBackground value
     @_setBackground @model.get 'bg_color'
-    @$('.aux-header-control .bg-colorpicker').colorpicker()
+    @$('.bg-colorpicker').colorpicker()
 
+  render: ->
+    @$el.html JST['registers/layout']()
+
+    @_autoSaveSetup()
+    @_resetDummyItems()
+
+    @listenToOnce @model, 'sync', @_flashLoaded
     @_statusText "Unsaved"  if @model.isNew()
     @
-
-  _changeBackgroundColor: (e)->
-    @model.set 'bg_color', e.color.toHex().slice(1)
-    @_undoableSave()
 
   _styleNewNew: (e)->
     @$('.completion-new').removeClass('completion-new').addClass('completion-progress')
     $(e.target).removeClass('completion-suggested').addClass('completion-new')
+
+  _dummyEditing: (e)->
+    @$(e.target).addClass 'editing'
+    @_undoableSave()
+
+  _resetDummyItems: ->
+    _(
+      '#wish-1234567890bar': "Whisky bar"
+      '#wish-1234567890pony': "Pony"
+      '#wish-1234567890girl': "Little girl"
+      '#wish-1234567890new': "What would you want?"
+    ).each (val, sel)=>
+      @$(sel).text val
+
+    @_styleNewNew target: @$('#wish-1234567890girl')[0]
+    @$('#wish-1234567890new').removeClass('completion-progress').addClass('completion-suggested')
 
   _undoableSave: ->
     @_undo_seconds_left = UNDO_CHANCE_SECONDS
@@ -68,16 +91,24 @@ class Registers.LayoutView extends Backbone.View
   _doSave: ->
     @model.save null, wait: true
 
-    @$('.editing').removeClass 'editing'  # NOTE
+    @$('.editing').removeClass 'editing'
     @$('.bg-colorpicker').colorpicker('hide')
 
+    @stopListening @model, 'sync', @_flashLoaded
     @_statusFlash "Saved"
 
   _doLoad: ->
     @$('.bg-colorpicker').colorpicker('hide')
 
-    @render()
+    @model.revert()
+    @_resetDummyItems()
 
+    if @model.isNew()
+      @_statusText "Unsaved"
+    else
+      @_flashLoaded()
+
+  _flashLoaded: ->
     @_statusFlash "Loaded"
 
   _statusFlash: (text)->

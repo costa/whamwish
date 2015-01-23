@@ -16,10 +16,8 @@ module FormHelpers
       expect(el).to have_content "some input"
       expect(page).to have_selector "#{sel}.editing"
       expect(page).to have_content "Undo? (3)"
-      expect(page).to have_no_content "Loaded"
       click_on "Undo? (2)"
       expect(page).to have_no_content "Undo?"
-      expect(page).to have_content "Loaded"
       expect(el).to have_content init_val
     end
 

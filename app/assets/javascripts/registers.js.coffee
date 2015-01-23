@@ -11,8 +11,8 @@ class Router extends Backbone.Router
     register =
       Registers.recent.findWhere(key: key) ||
       key.length > 16 && Registers.recent.add(key: key)  # XXX decent validation, see app/models/register
-    # XXX handle the case when the register is not in recent
-    return @_land()  unless register?  # XXX show an actual 404 instead of the silent redirect
+
+    return @_land()  unless register  # XXX show an actual 404 instead of the silent redirect + SPECS
 
     new Registers.LayoutView(
       el: $('main')

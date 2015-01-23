@@ -18,6 +18,14 @@ describe Register do
 
   end
 
+  describe '#firebase_path' do
+
+    it "returns the string" do
+      expect(subject.firebase_path).to match /registers\/dummydummydummydummy$/
+    end
+
+  end
+
   describe '#as_json' do
 
     it "formats for json" do
@@ -31,6 +39,22 @@ describe Register do
       )
     end
 
+  end
+
+  it "updates the firebase on create" do
+    expect_any_instance_of(Firebase::Client).to receive(:set) do |_, path, val|
+      expect(path).to eq subject.firebase_path
+      expect(val).to eq subject.as_json
+      double :success? => true
+    end
+    subject.save!
+  end
+
+  it "doesn't save when firebase is throwing errors" do
+    expect_any_instance_of(Firebase::Client).to receive(:set).and_return(double :success? => false)
+    expect {
+      subject.save!
+    }.to raise_error
   end
 
 end

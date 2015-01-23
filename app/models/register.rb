@@ -1,4 +1,7 @@
 class Register < ActiveRecord::Base
+  include Firebase::Ext::Writable
+
+  def firebase_path; "registers/#{key}"; end
 
   self.primary_key = :key
 

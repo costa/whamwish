@@ -4,4 +4,4 @@ end
 
 Capybara.default_driver = :selenium_chrome
 
-Capybara.default_wait_time = 8
+Capybara.default_wait_time = 6

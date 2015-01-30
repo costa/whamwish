@@ -34,5 +34,12 @@ module Whamwish
 
     # config.assets.precompile += []
 
+    # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.active_record.raise_in_transactional_callbacks = true
+
+    if config.respond_to? :web_console
+      # config.web_console.whitelisted_ips = ['127.0.0.1']
+      config.web_console.whitelisted_ips = ['127.0.0.1', ENV['WEB_CONSOLE_PRIVATE_IP'].presence].compact  # E.g. '192.168.0.0/16'
+    end
   end
 end

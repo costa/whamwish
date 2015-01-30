@@ -42,7 +42,9 @@ describe Register do
   end
 
   it "updates the firebase on create" do
-    expect_any_instance_of(Firebase::Client).to receive(:set) do |_, path, val|
+    firebase_mock = double
+    allow(Firebase::Client).to receive(:new).and_return firebase_mock
+    expect(firebase_mock).to receive(:set) do |path, val|
       expect(path).to eq subject.firebase_path
       expect(val).to eq subject.as_json
       double :success? => true
@@ -51,7 +53,7 @@ describe Register do
   end
 
   it "doesn't save when firebase is throwing errors" do
-    expect_any_instance_of(Firebase::Client).to receive(:set).and_return(double :success? => false)
+    allow(Firebase::Client).to receive(:new).and_return double(:set => double(:success? => false))
     expect {
       subject.save!
     }.to raise_error

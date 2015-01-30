@@ -1,5 +1,5 @@
 RSpec.configure do |config|
   config.before :each do
-    allow_any_instance_of(Firebase::Client).to receive(:set).and_return(double :success? => true)
+    allow(Firebase::Client).to receive(:new).and_return double(:set => double(:success? => true))
   end
 end

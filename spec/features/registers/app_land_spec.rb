@@ -55,8 +55,10 @@ feature 'App Land' do
 
     # XXX mock firebase persistence - save
     firebase_val = nil
-    allow_any_instance_of(Firebase::Client).to(
-      receive(:set) do |_, path, val|
+    firebase_mock = double
+    allow(Firebase::Client).to receive(:new).and_return firebase_mock
+    allow(firebase_mock).to(
+      receive(:set) do |path, val|
         firebase_val = val  if path == "registers/#{key}"
         double :success? => true
       end

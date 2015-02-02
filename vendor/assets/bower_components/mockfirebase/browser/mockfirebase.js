@@ -1,4 +1,4 @@
-/** mockfirebase - v0.9.2
+/** mockfirebase - v0.9.4
 https://github.com/katowulf/mockfirebase
 * Copyright (c) 2014 Kato
 * License: MIT */
@@ -10054,6 +10054,25 @@ function MockFirebase (path, data, parent, name) {
   _.extend(this, Auth.prototype, new Auth());
 }
 
+MockFirebase.ServerValue = {
+  TIMESTAMP: {
+    '.sv': 'timestamp'
+  }
+};
+
+var getServerTime, defaultClock;
+getServerTime = defaultClock = function () {
+  return new Date().getTime();
+};
+
+MockFirebase.setClock = function (fn) {
+  getServerTime = fn;
+};
+
+MockFirebase.restoreClock = function () {
+  getServerTime = defaultClock;
+};
+
 MockFirebase.prototype.flush = function (delay) {
   this.queue.flush(delay);
   return this;
@@ -10230,9 +10249,7 @@ MockFirebase.prototype.once = function (event, callback, cancel, context) {
     context = cancel;
     cancel = _.noop;
   }
-  else if (arguments.length < 3) {
-    cancel = _.noop;
-  }
+  cancel = cancel || _.noop;
   var err = this._nextErr('once');
   if (err) {
     this._defer('once', _.toArray(arguments), function () {
@@ -10264,9 +10281,7 @@ MockFirebase.prototype.on = function (event, callback, cancel, context) {
     context = cancel;
     cancel = _.noop;
   }
-  else if (arguments.length < 3) {
-    cancel = _.noop;
-  }
+  cancel = cancel || _.noop;
 
   var err = this._nextErr('on');
   if (err) {
@@ -10277,6 +10292,7 @@ MockFirebase.prototype.on = function (event, callback, cancel, context) {
   else {
     this._on('on', event, callback, cancel, context);
   }
+  return callback;
 };
 
 MockFirebase.prototype.off = function (event, callback, context) {
@@ -10347,6 +10363,11 @@ MockFirebase.prototype._childChanged = function (ref) {
 MockFirebase.prototype._dataChanged = function (unparsedData) {
   var pri = utils.getMeta(unparsedData, 'priority', this.priority);
   var data = utils.cleanData(unparsedData);
+
+  if (utils.isServerTimestamp(data)) {
+    data = getServerTime();
+  }
+
   if( pri !== this.priority ) {
     this._priChanged(pri);
   }
@@ -10367,7 +10388,11 @@ MockFirebase.prototype._dataChanged = function (unparsedData) {
     }
     else {
       keysToChange.forEach(function(key) {
-        this._updateOrAdd(key, unparsedData[key], events);
+        var childData = unparsedData[key];
+          if (utils.isServerTimestamp(childData)) {
+            childData = getServerTime();  
+          }
+        this._updateOrAdd(key, childData, events);
       }, this);
     }
 
@@ -10381,6 +10406,9 @@ MockFirebase.prototype._dataChanged = function (unparsedData) {
 };
 
 MockFirebase.prototype._priChanged = function (newPriority) {
+  if (utils.isServerTimestamp(newPriority)) {
+    newPriority = getServerTime();
+  }
   this.priority = newPriority;
   if( this.parentRef ) {
     this.parentRef._resort(this.key());
@@ -10937,6 +10965,11 @@ MockQuery.prototype.fakeEvent = function (event, snapshot) {
 };
 
 MockQuery.prototype.on = function (event, callback, cancelCallback, context) {
+  if (arguments.length === 3 && typeof cancelCallback !== 'function') {
+    context = cancelCallback;
+    cancelCallback = _.noop;
+  }
+  cancelCallback = cancelCallback || _.noop;
   var self = this;
   var isFirst = true;
   var lastSlice = this.slice();
@@ -10991,7 +11024,7 @@ MockQuery.prototype.on = function (event, callback, cancelCallback, context) {
     lastSlice = slice;
   }
   this._events.push([event, callback, context, handleRefEvent]);
-  this.ref().on(event, handleRefEvent, _.bind(cancelCallback || _.noop, context));
+  this.ref().on(event, handleRefEvent, _.bind(cancelCallback, context));
 };
 
 MockQuery.prototype.off = function (event, callback, context) {
@@ -11473,6 +11506,10 @@ exports.priorityComparator = function priorityComparator (a, b) {
     }
   }
   return 0;
+};
+
+exports.isServerTimestamp = function isServerTimestamp (data) {
+  return _.isObject(data) && data['.sv'] === 'timestamp';
 };
 
 },{"./snapshot":22,"lodash":15}]},{},[1])(1)

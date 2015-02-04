@@ -11,5 +11,5 @@ Rails.application.config.assets.version = '1.0'
 if Rails.env.test?
   Rails.application.config.assets.precompile += %w[ mock_firebase.js ]
 else
-  Rails.application.config.assets.precompile += %w[ firebase.js uservoice.js ]
+  Rails.application.config.assets.precompile += %w[ firebase/firebase.js uservoice.js ]
 end

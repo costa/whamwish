@@ -5,7 +5,7 @@
     %title= content_for?(:title) ? yield(:title) : t('.title')
     %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : t('.description')}"}
     = stylesheet_link_tag 'application', media: 'all'
-    = javascript_include_tag Rails.env.test?? 'mock_firebase': 'firebase'
+    = javascript_include_tag Rails.env.test?? 'mock_firebase': 'firebase/firebase'
     = javascript_include_tag 'application'
     = javascript_include_tag 'uservoice'  unless Rails.env.test?
     = csrf_meta_tags

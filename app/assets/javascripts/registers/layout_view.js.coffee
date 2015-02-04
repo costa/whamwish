@@ -23,7 +23,7 @@ class Registers.LayoutView extends Backbone.View
     @model.set 'bg_color', e.color.toHex().slice(1)
     @_undoableSave()
 
-  _autoSaveSetup: ->
+  _setupAutoSave: ->
     @listenTo @model, 'change', (model, options)->
       if options.stickitChange
         @$(options.stickitChange.selector).addClass 'editing'
@@ -38,11 +38,11 @@ class Registers.LayoutView extends Backbone.View
   render: ->
     @$el.html JST['registers/layout']()
 
-    @_autoSaveSetup()
+    @_setupAutoSave()
     @_resetDummyItems()
 
-    @listenToOnce @model, 'sync', @_flashLoaded
-    @_statusText "Unsaved"  if @model.isNew()
+    @listenToOnce @model, 'sync', @_initStatus
+    @_initStatus()
     @
 
   _styleNewNew: (e)->
@@ -65,6 +65,10 @@ class Registers.LayoutView extends Backbone.View
     @_styleNewNew target: @$('#wish-1234567890girl')[0]
     @$('#wish-1234567890new').removeClass('completion-progress').addClass('completion-suggested')
 
+  _resetEditing: ->
+    @$('.editing').removeClass 'editing'
+    @$('.bg-colorpicker').colorpicker 'hide'
+
   _undoableSave: ->
     @_undo_seconds_left = UNDO_CHANCE_SECONDS
     unless @__undoTimer
@@ -80,7 +84,7 @@ class Registers.LayoutView extends Backbone.View
     @_doLoad()
 
   _undoTick: ->
-    @_statusText "Undo? (#{@_undo_seconds_left})"
+    @_setStatus "Undo? (#{@_undo_seconds_left})"
 
     if @_undo_seconds_left-- > 0
       @__undoTimer = _(=> @_undoTick()).delay 1000
@@ -89,35 +93,29 @@ class Registers.LayoutView extends Backbone.View
       @_doSave()
 
   _doSave: ->
-    @model.save null, wait: true
-
-    @$('.editing').removeClass 'editing'
-    @$('.bg-colorpicker').colorpicker('hide')
-
-    @stopListening @model, 'sync', @_flashLoaded
-    @_statusFlash "Saved"
+    @model.save null, patch: true, wait: true
+    @_resetEditing()
+    @_flashStatus "Saved"
 
   _doLoad: ->
-    @$('.bg-colorpicker').colorpicker('hide')
-
     @model.revert()
     @_resetDummyItems()
+    @_resetEditing()
+    @_initStatus()
 
+  _initStatus: ->
     if @model.isNew()
-      @_statusText "Unsaved"
+      @_setStatus "Unsaved"
     else
-      @_flashLoaded()
+      @_flashStatus "Loaded"
 
-  _flashLoaded: ->
-    @_statusFlash "Loaded"
-
-  _statusFlash: (text)->
-    @_statusText text
+  _flashStatus: (text)->
+    @_setStatus text
     _(=>
       @_hideStatusBtn()  if @$('.status.btn').text() == text
     ).delay 6000
 
-  _statusText: (text)->
+  _setStatus: (text)->
     @_showStatusBtn()
     @$('.status.btn').
       animate(opacity: 0.2, 'fast').

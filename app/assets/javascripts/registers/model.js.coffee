@@ -4,6 +4,7 @@ class Register extends Backbone.Firebase.Model
 
   url: ->  # XXX https://github.com/firebase/backbonefire/issues/131
     "#{FIREBASE_URL}/registers/#{@get 'key'}"
+  urlRoot: '/registers'  # XXX for the REST
 
   defaults: ->
     titles = @_generateTitles()
@@ -30,9 +31,8 @@ class Register extends Backbone.Firebase.Model
     super
 
     # NOTE "Fixing" the model's url for writes (REST), *after* Firebase has been initialised
-    @url = -> @collection.url
-
     # XXX https://github.com/firebase/backbonefire/issues/133
+    @url = Backbone.Model.prototype.url
     @sync = Backbone.Model.prototype.sync
     @save = Backbone.Model.prototype.save
 
@@ -54,8 +54,6 @@ class Register extends Backbone.Firebase.Model
 
 class Registers.LocalRegisters extends Backbone.Collection
   model: Register
-
-  url: '/registers'
 
 
 rhex4 = ->

@@ -18,6 +18,16 @@ describe Register do
 
   end
 
+  %w[title subtitle].each do |tit|
+    describe "##{tit}" do
+
+      it "validates the length" do
+        expect(subject.tap() {|register| register[tit] = 'toolong' * 100}).not_to be_valid
+      end
+
+    end
+  end
+
   describe '#firebase_path' do
 
     it "returns the string" do

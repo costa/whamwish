@@ -10390,7 +10390,7 @@ MockFirebase.prototype._dataChanged = function (unparsedData) {
       keysToChange.forEach(function(key) {
         var childData = unparsedData[key];
           if (utils.isServerTimestamp(childData)) {
-            childData = getServerTime();  
+            childData = getServerTime();
           }
         this._updateOrAdd(key, childData, events);
       }, this);

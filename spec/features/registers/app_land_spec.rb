@@ -45,15 +45,18 @@ feature 'App Land' do
 
   end
 
-  scenario "a visitor follows a link to a wish register" do
+  scenario "a visitor follows a link to a wish register (edited by another user)" do
 
     # Make some edits in a new wish register and capture its key
     visit root_path
     expect(page).to have_content "Unsaved"
 
+    title_el = find('.register .title')
+    subtitle_el = find('.register .subtitle')
+
     key = register_uri_to_key(current_url)
 
-    # XXX mock firebase persistence - save
+    # XXX mock firebase persistence - save - https://gist.github.com/costa/43ddf9ae5c51791aeab6
     firebase_val = nil
     firebase_mock = double
     allow(Firebase::Client).to receive(:new).and_return firebase_mock
@@ -64,32 +67,30 @@ feature 'App Land' do
       end
     )
 
-    title_el = find('.register .title')
-    title_el.set "some input"
+    title_el.set "some title input"
+    expect(page).to have_no_content "Saved"
+    expect(page).to have_content "Saved"
+    subtitle_el.set "some subtitle input"
+    expect(page).to have_no_content "Saved"
     expect(page).to have_content "Saved"
 
     # Visit another register via refresh
 
-    visit root_path
+    visit root_path  # NOTE page DOES reload
     expect(page).to have_content "Unsaved"
 
-    expect(page).to have_no_content "some input"
-    title_el = find('.register .title')
+    expect(page).to have_no_content "some title input"
     title_el.set "some other input"
     expect(page).to have_content "Saved"
 
     # Check if accessing the first register brings the edited values
 
     visit register_key_to_path(key)  # NOTE page does NOT reload
+    # XXX mock firebase persistence - load - https://github.com/katowulf/mockfirebase/commit/60e75119a6e420ad7ddff1334b32f304e70ca1ed#commitcomment-9591744
+    execute_script "window.MOCK_FIREBASE = #{{"null/registers/#{key}" => firebase_val}.to_json};"
 
-    # XXX mock firebase persistence - load
-    execute_script(
-      "_(Registers.recent.findWhere({key: #{key.to_json}}).firebase).tap(function(fb) { fb.set(#{firebase_val.to_json}); fb.flush(); })"
-    )
-
-    expect(page).to have_content "Loaded"
-
-    expect(title_el).to have_content "some input"
+    expect(title_el).to have_content "some title input"
+    expect(subtitle_el).to have_content "some subtitle input"
 
   end
 

@@ -2,15 +2,23 @@ class RegistersController < ApplicationController
 
   respond_to :json, :except => :app
 
-  before_filter :remove_id_param  # XXX https://github.com/jashkenas/backbone/issues/302#issuecomment-69498852
+  TIMESTAMP_PARAMS = %i[created_at updated_at]
+  UPDATE_PARAMS = %i[title subtitle bg_color]
+  CREATE_PARAMS = UPDATE_PARAMS + %i[key]
 
   def app
   end
 
   def create
-    respond_with scope.create register_params
+    register = scope.create create_register_params
+    respond_with register  # NOTE by default: , :json => register
   end
 
+  def update
+    raise "Nonsense"  if params.delete(:id) != params[:key]
+    register = scope.update params.delete(:key), update_register_params
+    respond_with register, :json => register  # NOTE not by default
+  end
 
   private
 
@@ -18,12 +26,14 @@ class RegistersController < ApplicationController
     Register
   end
 
-  def register_params
-    params.permit(:key, :title, :subtitle, :bg_color)
+  def create_register_params
+    params.permit CREATE_PARAMS
   end
 
-  def remove_id_param
-    params.delete :id
+  def update_register_params
+    params.
+      except(*TIMESTAMP_PARAMS).  # XXX a timestamp consistency check?
+      permit UPDATE_PARAMS
   end
 
 end

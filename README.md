@@ -1,0 +1,3 @@
+# whamwish
+
+NOT LICENSED FOR ANY COPY/USE
